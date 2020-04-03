@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放器</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./CSS/audio.css">
+    <!-- <link rel="stylesheet" href="style.css" media=""> -->
+    <script src="./JS/songList.js"></script>
+</head>
+
+<body>
+    <div class="player">
+        <div class="coverBox">
+            <div class="mask1 mask"></div>
+            <div class="mask2 mask"></div>
+            <div class="mask3 mask"></div>
+            <div class="mask4 mask"></div>
+            <div class="mask5 mask"></div>
+            <div class="noun">
+                <!-- 歌曲封面图片 -->
+                <img src="" alt="" id="img" class="rotate songCover">
+            </div>
+        </div>
+        <!-- 控制器 -->
+        <div class="control">
+            <!-- 前一首 -->
+            <div class="prev" id="prev"><i class="fa fa-backward fa-2x"></i></div>
+            <!-- 播放暂停 -->
+            <div class="isplay" id="isplay"><i class="fa fa-play-circle fa-5x"></i></div>
+            <!-- 下一首 -->
+            <div class="next" id="next"><i class="fa fa-forward fa-2x"></i></div>
+        </div>
+        <div class="bar">
+            <!-- 进度条 -->
+            <span class="currentProgress">
+                00:00
+            </span>
+            <div class="site" id="site">
+                <span id="progress" class="progress"></span>
+                <span id="dragPoint" class="dragPoint"></span>
+            </div>
+            <span class="totalProgress">
+                00:00
+            </span>
+        </div>
+        <audio style="display: none;" id="audio" controls='controls' class="audio"></audio>
+    </div>
+    <canvas id="space"></canvas>
+
+    <script src="bundleDev.js"></script>
+</body>
+
+</html>

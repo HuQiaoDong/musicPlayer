@@ -1,0 +1,236 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+@media only screen and (min-width: 1200px) {
+  body .player {
+    width: 20% !important;
+    height: 65% !important;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  body .player {
+    width: 50% !important;
+    height: 75% !important;
+  }
+}
+html {
+  height: 100%;
+}
+body {
+  background: radial-gradient(ellipse at center, #061a33 0%, #000000 100%);
+  /* opacity: 0.4; */
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: #07080f;
+}
+@keyframes spread {
+  from {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  to {
+    transform: scale(2.27);
+    opacity: 0;
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.rotate {
+  animation: rotate 10s linear infinite paused;
+}
+.iconfont {
+  display: block;
+  font-size: 22px;
+  color: white;
+  z-index: 9999;
+}
+.fadeIn {
+  animation: fadeIn 3s linear forwards;
+}
+.player {
+  /* display: flex; */
+  padding: 0px 10px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  width: 90%;
+  height: 75%;
+  border-radius: 8px;
+}
+.player::after {
+  padding: 0px 10px;
+  box-sizing: border-box;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  z-index: -999;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  border-radius: 8px;
+  background: radial-gradient(circle at 80px 40px, #ffffff, rgba(0, 0, 0, 0));
+  opacity: 0.4;
+}
+.player .coverBox {
+  /* width: 60%; */
+  width: 90%;
+  height: 250px;
+  margin: auto;
+  margin-top: 8%;
+  display: flex;
+  position: relative;
+}
+.player .coverBox .mask {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 110px;
+  height: 110px;
+  margin: auto;
+  border-radius: 50%;
+  animation-name: spread;
+  animation-timing-function: linear;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  background-color: white;
+  opacity: 0.3;
+}
+.player .coverBox .mask2 {
+  animation-delay: 1.25s;
+}
+.player .coverBox .mask3 {
+  animation-delay: 2.5s;
+}
+.player .coverBox .mask4 {
+  animation-delay: 3.75s;
+}
+.player .coverBox .mask5 {
+  animation-delay: 5s;
+}
+.player .coverBox .noun {
+  width: 110px;
+  height: 110px;
+  margin: auto;
+}
+.player .coverBox .noun .songCover {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.player .control {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5%;
+}
+.player .control .prev,
+.player .control .next {
+  padding: 24px 0px;
+}
+.player .control .prev i,
+.player .control .next i {
+  color: #bcbcbc;
+}
+.player .control .isplay i {
+  color: #d4d4d4;
+}
+.player .bar {
+  margin-top: 15%;
+  height: 5px;
+  display: flex;
+  justify-content: start;
+}
+.player .bar .currentProgress,
+.player .bar .totalProgress {
+  text-align: center;
+  width: 10%;
+  color: white;
+  font-size: 10px;
+}
+.player .bar .site {
+  width: 80%;
+  height: 5px;
+  background: -webkit-linear-gradient(rgba(250, 240, 230, 0.2), rgba(250, 240, 230, 0.2)) no-repeat, rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.player .bar .site .progress {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  opacity: 0.6;
+  display: inline-block;
+  background-color: white;
+}
+.player .bar .site .dragPoint {
+  position: absolute;
+  top: -5px;
+  left: 0px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  z-index: 100;
+  background-color: white;
+  opacity: 1;
+}
+.player .lyricsDomain {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  margin: auto;
+}
+.player .playbackMode {
+  position: absolute;
+  bottom: 2%;
+  right: 4%;
+}
+.player .show {
+  position: absolute;
+  top: 75%;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  text-align: center;
+  width: 23%;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  border-radius: 14px;
+  background: radial-gradient(circle at 40px 40px, #bcbcbc, rgba(0, 0, 0, 0));
+  opacity: 0;
+}
+.space {
+  position: absolute;
+  z-index: -10000;
+  width: 100%;
+  height: 100%;
+}

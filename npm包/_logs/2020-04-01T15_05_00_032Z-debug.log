@@ -1,0 +1,27 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'dev' ]
+2 info using npm@6.13.4
+3 info using node@v12.16.1
+4 verbose stack Error: Failed to parse json
+4 verbose stack Unexpected token } in JSON at position 305 while parsing near '...config.dev.js",
+4 verbose stack     },
+4 verbose stack     "keywords": [...'
+4 verbose stack     at parseError (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:470:11)
+4 verbose stack     at parseJson (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:105:26)
+4 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:52:5
+4 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:115:16
+4 verbose stack     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+5 verbose cwd /Users/huqiaodong/Documents/html5css3/app
+6 verbose Darwin 18.7.0
+7 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev"
+8 verbose node v12.16.1
+9 verbose npm  v6.13.4
+10 error code EJSONPARSE
+11 error file /Users/huqiaodong/Documents/html5css3/app/package.json
+12 error JSON.parse Failed to parse json
+12 error JSON.parse Unexpected token } in JSON at position 305 while parsing near '...config.dev.js",
+12 error JSON.parse     },
+12 error JSON.parse     "keywords": [...'
+13 error JSON.parse Failed to parse package.json data.
+13 error JSON.parse package.json must be actual JSON, not just JavaScript.
+14 verbose exit [ 1, true ]
