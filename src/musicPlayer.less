@@ -53,15 +53,15 @@ body {
     }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 1;
-    }
+// @keyframes fadeIn {
+//     from {
+//         opacity: 1;
+//     }
 
-    to {
-        opacity: 0;
-    }
-}
+//     to {
+//         opacity: 0;
+//     }
+// }
 
 .rotate {
     animation: rotate 10s linear infinite paused;
@@ -74,9 +74,6 @@ body {
     z-index: 9999;
 }
 
-.fadeIn {
-    animation: fadeIn 3s linear forwards;
-}
 
 .player {
     /* display: flex; */
@@ -92,10 +89,9 @@ body {
     height: 75%;
     border-radius: 8px;
 
-    &::after {
+    .bgcMask{
         padding: 0px 10px;
         box-sizing: border-box;
-        content: '';
         display: block;
         width: 100%;
         height: 100%;
@@ -256,18 +252,20 @@ body {
 
     .show {
         position: absolute;
-        top: 75%;
+        top: 45%;
         left: 0px;
         right: 0px;
         margin: auto;
         text-align: center;
         width: 23%;
         height: 30px;
+        opacity: 0;
         line-height: 30px;
+        display: none;
         font-size: 12px;
         border-radius: 14px;
+        animation-duration: 3s;
         background: radial-gradient(circle at 40px 40px, #bcbcbc, rgba(0, 0, 0, 0));
-        opacity: 0;
     }
 }
 

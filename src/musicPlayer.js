@@ -7,6 +7,9 @@ function AudioPlayer(root, songNum, playWay) {
 
     this.songIndex = 0;
     this.root = root;
+    this.count = 100;
+    this.timer = null;
+    this.bgcTimer = null;
     this.songNum = songNum;
     this.playWay = playWay;
 
@@ -21,6 +24,7 @@ function AudioPlayer(root, songNum, playWay) {
     this.dragPoint = this.root.querySelector('.dragPoint');
     this.iconfont = this.root.querySelector('.iconfont');
     this.show = this.root.querySelector('.show');
+    this.bgcMask = this.root.querySelector('.bgcMask');
 
     this.init();
 }
@@ -101,8 +105,13 @@ AudioPlayer.prototype.init = function() {
         };
         // 改变播放顺序
         this.iconfont.onclick = function() {
-            console.log('click');
+
+            that.count = 100;
+            clearInterval(that.timer);
+            that.show.style.display = 'block';
+
             that.playWay >= 2 ? that.playWay = 0 : that.playWay++;
+
             switch (that.playWay) {
                 case 0:
                     this.className = 'iconfont icon-shunxubofang';
@@ -235,13 +244,65 @@ AudioPlayer.prototype.singleTuneCirculation = function() {
 };
 //播放顺序弹窗
 AudioPlayer.prototype.showText = function(text) {
-    this.show.classList.add('fadeIn');
+    let that = this;
     this.show.innerHTML = text;
+    this.timer = setInterval(() => {
+        if (that.count <= 0) {
+            that.count = 100;
+            that.show.style.display = 'none';
+            clearInterval(that.timer);
+        } else {
+            that.count--;
+            that.show.style.opacity = `${that.count/100}`
+        }
+        console.log(that.count);
+    }, 30)
+
 };
 //更改播放器背景色
 AudioPlayer.prototype.changeBgColor = function() {
-    let afterStyle = window.getComputedStyle(this.root, ":after");
-    // afterStyle.background = `rgba(122,122,122,0.5)`;
-    console.log(afterStyle.background);
+    let that = this;
+    let [red, green, blue] = [0, 0, 0];
+    let isEnd = false;
+    this.bgcTimer = setInterval(() => {
+        if (!isEnd) {
+            if (red >= 255) {
+                red = 255;
+                green++;
+                if (green >= 255) {
+                    green = 255;
+                    blue++;
+                    if (blue >= 255) {
+                        blue = 255;
+                        isEnd = true;
+                    }
+                }
+            } else {
+                red++;
+            }
+        } else {
+            if (blue >= 255) {
+                blue = 255;
+                green--;
+                if (green <= 0) {
+                    green = 0;
+                    red--;
+                    if (red <= 0) {
+                        blue--;
+                    }
+                }
+            } else {
+                blue--;
+                if (blue <= 0) {
+                    isEnd = false;
+                }
+            }
+        }
+        // console.log(red, green, blue);
+        that.bgcMask.style.backgroundColor = `rgba(${red},${green},${blue},0.5)`
+    }, 100)
 }
 let audioPlayer = new AudioPlayer(player, songList.length - 1, 0);
+audioPlayer.show.addEventListener('webkitTransitionEnd', function() {
+    console.log('end');
+})
