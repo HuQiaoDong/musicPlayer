@@ -3,6 +3,7 @@ import _ from 'lodash';
 import './musicPlayer.less';
 import './musicPlayer.js';
 import './background.js';
+import './songList.js';
 import Icon from './01.jpg';
 
 function component() {

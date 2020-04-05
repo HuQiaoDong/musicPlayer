@@ -37,6 +37,7 @@ AudioPlayer.prototype.init = function() {
         // this.root.canplay = function() {
         //     console.log('keyi');
         // }
+        this.lyric(songList[0].lrc.lyric);
         this.audio.addEventListener("canplay", function() {
             //监听audio是否加载完毕
             that.upProgressDate();
@@ -44,7 +45,6 @@ AudioPlayer.prototype.init = function() {
 
         // this.audio.src = this.getSongUrl(songList[this.songIndex].id);
         this.isplay.onclick = () => {
-            console.log
             if (that.audio.paused) {
                 that.playAudio();
             } else {
@@ -301,6 +301,17 @@ AudioPlayer.prototype.changeBgColor = function() {
         // console.log(red, green, blue);
         that.bgcMask.style.backgroundColor = `rgba(${red},${green},${blue},0.5)`
     }, 100)
+}
+AudioPlayer.prototype.lyric = function(text) {
+    console.log(text);
+    let lines = text.split('\n');
+    console.log(lines);
+    let pattern = /\[\d{2}:\d{2}.\d{2}\]/g;
+    let result = [];
+    while (!pattern.test(lines[0])) {
+
+    };
+    console.log(lines);
 }
 let audioPlayer = new AudioPlayer(player, songList.length - 1, 0);
 audioPlayer.show.addEventListener('webkitTransitionEnd', function() {
