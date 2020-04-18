@@ -1,0 +1,18 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'build', 'run' ]
+2 info using npm@6.13.4
+3 info using node@v12.16.1
+4 info build /Users/huqiaodong/Documents/html5css3/app/run
+5 verbose stack Error: ENOENT: no such file or directory, open '/Users/huqiaodong/Documents/html5css3/app/run/package.json'
+6 verbose cwd /Users/huqiaodong/Documents/html5css3/app
+7 verbose Darwin 18.7.0
+8 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "build" "run"
+9 verbose node v12.16.1
+10 verbose npm  v6.13.4
+11 error code ENOENT
+12 error syscall open
+13 error path /Users/huqiaodong/Documents/html5css3/app/run/package.json
+14 error errno -2
+15 error enoent ENOENT: no such file or directory, open '/Users/huqiaodong/Documents/html5css3/app/run/package.json'
+16 error enoent This is related to npm not being able to find a file.
+17 verbose exit [ -2, true ]

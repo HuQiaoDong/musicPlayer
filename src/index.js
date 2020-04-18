@@ -1,6 +1,7 @@
 import _ from 'lodash';
 // import './musicPlayer.css';
 import './musicPlayer.less';
+import './font_8tuqch8dmr/iconfont.css';
 import './musicPlayer.js';
 import './background.js';
 import './songList.js';
@@ -21,3 +22,9 @@ function component() {
 }
 
 document.body.appendChild(component());
+// if (module.hot) {
+//     module.hot.accept('./print.js', function() {
+//         console.log('Accepting the updated printMe module!');
+//         printMe();
+//     })
+// }

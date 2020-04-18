@@ -1,4 +1,5 @@
 import songList from './songList.js';
+// import { prototype } from 'vue/types/umd';
 let player = document.querySelector('.player');
 console.log(songList);
 /** @type {HTMLCanvasElement} */
@@ -25,6 +26,7 @@ function AudioPlayer(root, songNum, playWay) {
     this.iconfont = this.root.querySelector('.iconfont');
     this.show = this.root.querySelector('.show');
     this.bgcMask = this.root.querySelector('.bgcMask');
+    this.lyricsDomain = this.root.querySelector('.lyricsDomain');
 
     this.init();
 }
@@ -37,9 +39,11 @@ AudioPlayer.prototype.init = function() {
         // this.root.canplay = function() {
         //     console.log('keyi');
         // }
-        this.lyric(songList[0].lrc.lyric);
+        // this.lyric(songList[0].lrc.lyric);
         this.audio.addEventListener("canplay", function() {
             //监听audio是否加载完毕
+            // let lyricText = songList[this.songIndex].lrc.lyric;
+            that.lyricUpDate();
             that.upProgressDate();
         });
 
@@ -103,6 +107,8 @@ AudioPlayer.prototype.init = function() {
             window.onmousemove = null;
             that.audio.muted = false;
         };
+        //移动端进度条拖拽
+        this.dragProgress();
         // 改变播放顺序
         this.iconfont.onclick = function() {
 
@@ -153,6 +159,52 @@ AudioPlayer.prototype.playbackProgress = function(site) {
     this.dragPoint.style.left = time - this.dragPoint.offsetWidth / 2 + 'px';
     this.upProgressDate();
 };
+//更新歌词
+AudioPlayer.prototype.lyricUpDate = function(text) {
+    let lyricText = songList[this.songIndex].lrc.lyric;
+    let pattern = /\[\d{2}:\d{2}.\d{3}\]|\[\d{2}:\d{2}.\d{2}\]/g;
+    console.log('[00:00:00]'.match(pattern));
+
+    let result = [];
+    if (lyricText != '纯音乐，暂无歌词') {
+        let rows = lyricText.split('\n');
+        rows[rows.length - 1].length === 0 && rows.pop();
+
+        rows.forEach(function(item, index, arr) {
+            if (item.length <= 15) {
+                rows.splice(index, 1);
+            }
+            let time = item.match(pattern);
+            result.push(time);
+
+            // let k = time[0].toLocaleString();
+            // time = time.toString();
+            let value = item.replace(pattern, '');
+            console.log(time);
+            // console.log(k);
+
+            // result = time;
+
+            // time.forEach(function(item, index, arr) {
+            //     var t = item.slice(1, -1).split(':');
+            //     //将结果压入最终数组
+            //     result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
+            //     console.log(item);
+
+            // })
+        })
+
+        console.log(rows);
+        console.log(result);
+        // result.forEach(function(item, index, arr) {
+        //     console.log(item[0]);
+
+        // })
+
+    }
+    //                参考结果解析匹配歌词
+    this.lyricsDomain.innerHTML = '';
+};
 //点击改变歌曲当前帧
 AudioPlayer.prototype.jump = function(ev) {
     this.audio.currentTime = (ev.pageX - this.site.offsetParent.offsetLeft - this.site.offsetLeft) / (this.site.offsetWidth) * this.audio.duration;
@@ -183,8 +235,9 @@ AudioPlayer.prototype.upSourceDate = function() {
     //切换歌曲封面
     this.songCover.src = songList[this.songIndex].imgUrl;
     //重置歌曲封面动画
-    document.querySelector('img').classList.remove('rotate');
-    document.querySelector('img').classList.add('rotate');
+    this.songCover.classList.remove('rotate');
+    this.songCover.classList.add('rotate');
+    // document.querySelector('img').style.transform = 'rotate(0deg)';
 };
 // 获取音频资源
 AudioPlayer.prototype.getSongUrl = function(id) {
@@ -259,6 +312,34 @@ AudioPlayer.prototype.showText = function(text) {
     }, 30)
 
 };
+AudioPlayer.prototype.dragProgress = function() {
+    let that = this;
+    this.dragPoint.addEventListener('touchstart', function(e) {
+        let ev = e || window.event;
+        let touch = ev.targetTouches[0];
+        console.log(touch.clientX);
+        console.log(this.offsetLeft);
+        console.log(that.progress.offsetLeft);
+
+        that.dragPoint.addEventListener('touchmove', function(e) {
+            let ev = e || window.event;
+            let touch = ev.targetTouches[0];
+            e.preventDefault();
+            console.log('拖动中');
+            console.log(touch.pageX);
+            console.log(that.dragPoint.offsetLeft);
+            that.audio.muted = true;
+            that.jump(touch);
+        })
+        that.dragPoint.addEventListener('touchend', function(e) {
+            let ev = e || window.event;
+            e.preventDefault();
+            that.audio.muted = false;
+            console.log('拖动结束');
+        })
+    })
+
+};
 //更改播放器背景色
 AudioPlayer.prototype.changeBgColor = function() {
     let that = this;
@@ -303,17 +384,26 @@ AudioPlayer.prototype.changeBgColor = function() {
     }, 100)
 }
 AudioPlayer.prototype.lyric = function(text) {
-    console.log(text);
-    let lines = text.split('\n');
-    console.log(lines);
-    let pattern = /\[\d{2}:\d{2}.\d{2}\]/g;
-    let result = [];
-    while (!pattern.test(lines[0])) {
 
-    };
-    console.log(lines);
 }
 let audioPlayer = new AudioPlayer(player, songList.length - 1, 0);
-audioPlayer.show.addEventListener('webkitTransitionEnd', function() {
-    console.log('end');
-})
+/** vue接管的歌词部分 */
+// let app = new Vue({
+//     el: "#app",
+//     data: {
+//         lyric: 'kk',
+//     },
+//     methods: {
+//         show() {
+//             console.log(this.lyric);
+
+//         },
+//         lyricSwitch() {
+//             console.log(audioPlayer.songIndex);
+//         }
+//     },
+// beforeCreate() {
+//     console.log(this.lyric);
+//     this.lyric = `${songList[audioPlayer.songIndex].lrc.lyric}`
+// }
+// })
