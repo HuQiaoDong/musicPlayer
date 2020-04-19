@@ -66,6 +66,20 @@ body {
   height: 75%;
   border-radius: 8px;
 }
+.player .listLayer {
+  position: absolute;
+  height: 80%;
+  width: 90%;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  margin: auto;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  z-index: 1000;
+  display: none;
+}
 .player .bgcMask {
   padding: 0px 10px;
   box-sizing: border-box;
@@ -82,6 +96,15 @@ body {
   border-radius: 8px;
   background: radial-gradient(circle at 80px 40px, #ffffff, rgba(0, 0, 0, 0));
   opacity: 0.4;
+}
+.player .listBar {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+.player .listBar .fa-bars {
+  font-size: 25px;
+  color: #e7d7d7;
 }
 .player .coverBox {
   /* width: 60%; */

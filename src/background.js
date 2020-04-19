@@ -3,7 +3,7 @@ window.requestAnimFrame = (function() { return window.requestAnimationFrame })()
 var canvas = document.getElementById("space");
 var c = canvas.getContext("2d");
 
-var numStars = 1900;
+var numStars = 3000;
 var radius = '0.' + Math.floor(Math.random() * 9) + 1;
 var focalLength = canvas.width * 2;
 var warp = 0;
@@ -73,7 +73,7 @@ function drawStars() {
         pixelX += centerX;
         pixelY = (star.y - centerY) * (focalLength / star.z);
         pixelY += centerY;
-        pixelRadius = 1 * (focalLength / star.z);
+        pixelRadius = 0.7 * (focalLength / star.z);
 
         c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
         c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";

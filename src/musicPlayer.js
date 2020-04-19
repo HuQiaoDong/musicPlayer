@@ -13,6 +13,7 @@ function AudioPlayer(root, songNum, playWay) {
     this.bgcTimer = null;
     this.songNum = songNum;
     this.playWay = playWay;
+    this.lyricArr = null;
 
     //dom
     this.audio = this.root.querySelector('.audio');
@@ -27,6 +28,7 @@ function AudioPlayer(root, songNum, playWay) {
     this.show = this.root.querySelector('.show');
     this.bgcMask = this.root.querySelector('.bgcMask');
     this.lyricsDomain = this.root.querySelector('.lyricsDomain');
+    this.listBar = this.root.querySelector('.listBar');
 
     this.init();
 }
@@ -43,8 +45,9 @@ AudioPlayer.prototype.init = function() {
         this.audio.addEventListener("canplay", function() {
             //监听audio是否加载完毕
             // let lyricText = songList[this.songIndex].lrc.lyric;
-            that.lyricUpDate();
             that.upProgressDate();
+            that.lyricArr = that.lyricUpDate();
+            console.log(that.lyricArr);
         });
 
         // this.audio.src = this.getSongUrl(songList[this.songIndex].id);
@@ -82,6 +85,17 @@ AudioPlayer.prototype.init = function() {
             //     console.log(this.songIndex);
             //     this.listOrderPlay();
             // }
+            console.log(this.audio.currentTime);
+
+            console.log(this.lyricUpDate());
+
+            if (this.lyricUpDate() != undefined) {
+                this.lyricUpDate().forEach(function(item, index, arr) {
+                    if (that.audio.currentTime >= item[0]) {
+                        that.lyricsDomain.innerHTML = item[1];
+                    }
+                })
+            }
 
         };
         //点击进度条跳转歌曲进度
@@ -136,6 +150,9 @@ AudioPlayer.prototype.init = function() {
                     break;
             }
         }
+        this.listBar.onclick = function() {
+
+        }
     }
     //播放
 AudioPlayer.prototype.playAudio = function() {
@@ -163,47 +180,35 @@ AudioPlayer.prototype.playbackProgress = function(site) {
 AudioPlayer.prototype.lyricUpDate = function(text) {
     let lyricText = songList[this.songIndex].lrc.lyric;
     let pattern = /\[\d{2}:\d{2}.\d{3}\]|\[\d{2}:\d{2}.\d{2}\]/g;
-    console.log('[00:00:00]'.match(pattern));
 
     let result = [];
     if (lyricText != '纯音乐，暂无歌词') {
         let rows = lyricText.split('\n');
         rows[rows.length - 1].length === 0 && rows.pop();
-
         rows.forEach(function(item, index, arr) {
+
             if (item.length <= 15) {
                 rows.splice(index, 1);
+            } else {
+                var time = item.match(pattern);
+                let value = item.replace(pattern, '');
+
+                time.forEach(function(item, index, arr) {
+                    var t = item.slice(1, -1).split(':');
+                    //将结果压入最终数组
+
+                    result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
+
+                })
             }
-            let time = item.match(pattern);
-            result.push(time);
-
-            // let k = time[0].toLocaleString();
-            // time = time.toString();
-            let value = item.replace(pattern, '');
-            console.log(time);
-            // console.log(k);
-
-            // result = time;
-
-            // time.forEach(function(item, index, arr) {
-            //     var t = item.slice(1, -1).split(':');
-            //     //将结果压入最终数组
-            //     result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
-            //     console.log(item);
-
-            // })
         })
 
-        console.log(rows);
-        console.log(result);
-        // result.forEach(function(item, index, arr) {
-        //     console.log(item[0]);
-
-        // })
-
+        return result;
+    } else {
+        this.lyricArr = null;
+        this.lyricsDomain.innerHTML = '纯音乐，暂无歌词';
     }
     //                参考结果解析匹配歌词
-    this.lyricsDomain.innerHTML = '';
 };
 //点击改变歌曲当前帧
 AudioPlayer.prototype.jump = function(ev) {
@@ -316,18 +321,11 @@ AudioPlayer.prototype.dragProgress = function() {
     let that = this;
     this.dragPoint.addEventListener('touchstart', function(e) {
         let ev = e || window.event;
-        let touch = ev.targetTouches[0];
-        console.log(touch.clientX);
-        console.log(this.offsetLeft);
-        console.log(that.progress.offsetLeft);
 
         that.dragPoint.addEventListener('touchmove', function(e) {
             let ev = e || window.event;
             let touch = ev.targetTouches[0];
             e.preventDefault();
-            console.log('拖动中');
-            console.log(touch.pageX);
-            console.log(that.dragPoint.offsetLeft);
             that.audio.muted = true;
             that.jump(touch);
         })
@@ -335,7 +333,6 @@ AudioPlayer.prototype.dragProgress = function() {
             let ev = e || window.event;
             e.preventDefault();
             that.audio.muted = false;
-            console.log('拖动结束');
         })
     })
 
